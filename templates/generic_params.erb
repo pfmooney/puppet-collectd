@@ -1,0 +1,21 @@
+<%
+# Set the tab-in for content
+def tab_in(value) 
+  ts = (@template_tabstop.nil?) ? 4 : @template_tabstop.to_i
+  return (' ' * ts) + value
+end
+
+@template_fields.each do |field|
+  next if scope[field].nil?
+  value = scope[field].to_s
+  next if value.empty?
+  if !@template_rename.nil? && !@template_rename[field].nil?
+    field = @template_rename[field]
+  else
+    field[0] = field[0,1].upcase
+  end
+  -%>
+<%= tab_in(field + ' ' + value.to_s) %>
+<%
+end
+-%>
